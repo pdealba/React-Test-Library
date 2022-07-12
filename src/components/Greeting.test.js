@@ -20,13 +20,23 @@ describe("Greeting Component", () => {
     expect(defaultParagraphElement).toBeInTheDocument();
   });
 
-  test("renders changed wen the button is clicked", () => {
+  test("renders changed when the button is clicked", () => {
     render(<Greeting />);
 
-    const changeButton = screen.getByRole("button");
-    userEvent.click(changeButton);
+    const buttonElement = screen.getByRole("button");
+    userEvent.click(buttonElement);
 
-    const changedParagraph = screen.getByText("Changed!");
-    expect(changeButton).toBeInTheDocument();
+    const outputElement = screen.getByText("Changed!");
+    expect(outputElement).toBeInTheDocument();
+  });
+
+  test("Its good to see you! dosent render when the button is clicked", () => {
+    render(<Greeting />);
+
+    const buttonElement = screen.getByRole("button");
+    userEvent.click(buttonElement);
+
+    const outputElement = screen.queryByText('good to see you', {exact: false} );
+    expect(outputElement).toBeNull();
   });
 });
